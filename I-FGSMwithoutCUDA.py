@@ -84,13 +84,13 @@ class UNet(nn.Module):
 
 batch_size = 1
 
-model = UNet(in_channels = 1, out_channels = 1).cuda()
+model = UNet(in_channels = 1, out_channels = 1)
 model.load_state_dict(torch.load('./Lung-BCE.pt'))
 
 input_img = Image.open("./MCUCXR_0013_0.png")
 imgtransform = transforms.Compose([transforms.Resize((572, 572)), transforms.ToTensor()])
-input_img = imgtransform(input_img).unsqueeze(0).cuda()
-img_variable = Variable(input_img, requires_grad = True).cuda()
+input_img = imgtransform(input_img).unsqueeze(0)
+img_variable = Variable(input_img, requires_grad = True)
 
 output_true = model(img_variable)
 
@@ -99,7 +99,7 @@ target_arr = np.array(target)
 target_arr = target_arr / (target_arr.max() - target_arr.min())
 target  = transforms.ToTensor()(Image.fromarray(target_arr)).unsqueeze(0)
 
-target_variable = Variable(target, requires_grad = True).cuda()
+target_variable = Variable(target, requires_grad = True)
 epsilon = 1e-1
 num_steps = 25
 alpha = 1e-3
